@@ -1,0 +1,30 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ToDo{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  {% if request.user.is_authenticated %}
+  <header class="navbar">
+    <div class="container nav-row">
+      <a class="brand" href="{% url 'task_list' %}">ToDo</a>
+      <nav class="nav-links">
+        <a href="{% url 'task_create' %}">Add Task</a>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="aslink">Logout</button>
+        </form>
+      </nav>
+    </div>
+  </header>
+  {% endif %}
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

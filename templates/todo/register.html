@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Register | ToDo{% endblock %}
+{% block content %}
+  <div class="center">
+    <div class="auth-container">
+      <h2>Create Account</h2>
+      {% if form.errors %}
+        <div class="error-messages">
+          {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+              <p class="message">{{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.username }}
+        {{ form.email }}
+        {{ form.password1 }}
+        {{ form.password2 }}
+        <button type="submit">Register</button>
+      </form>
+      <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+  </div>
+{% endblock %}

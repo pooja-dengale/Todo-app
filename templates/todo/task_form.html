@@ -1,0 +1,17 @@
+﻿{% extends 'base.html' %}
+{% block title %}{% if action == 'Update' %}Edit Task{% else %}New Task{% endif %} | ToDo{% endblock %}
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ action }} Task</h2>
+    </div>
+    <form method="POST" class="form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="form-actions">
+        <button type="submit" class="btn primary">Save</button>
+        <a class="btn" href="{% url 'task_list' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

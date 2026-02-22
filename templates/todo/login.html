@@ -1,0 +1,22 @@
+﻿{% extends 'base.html' %}
+{% block title %}Login | ToDo{% endblock %}
+{% block content %}
+  <div class="center">
+    <div class="auth-container">
+      <h2>Welcome back</h2>
+      {% if form.errors %}
+        <p class="message">Invalid username or password</p>
+      {% endif %}
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        <label for="id_username" class="sr-only">Username</label>
+        {{ form.username }}
+        <label for="id_password" class="sr-only">Password</label>
+        {{ form.password }}
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+  </div>
+{% endblock %}
