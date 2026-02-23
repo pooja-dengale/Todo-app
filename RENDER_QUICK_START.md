@@ -23,9 +23,14 @@ Follow these simple steps to deploy your Django todo app to Render.
 
 ### 1.2 Push Your Code
 
-Open your terminal in the `dist` folder and run:
+**IMPORTANT**: Push only the contents of the `dist` folder, not the parent directory!
+
+Open your terminal and navigate to the `dist` folder:
 
 ```bash
+# Navigate to the dist folder
+cd dist
+
 # Initialize git (if not already done)
 git init
 
@@ -47,6 +52,8 @@ git push -u origin main
 **Enter your GitHub username and password (or personal access token) when prompted.**
 
 ✅ Your code is now on GitHub!
+
+**Note**: Make sure you're inside the `dist` folder when running these commands. Your GitHub repo should show `manage.py`, `requirements.txt`, `render.yaml` at the root level.
 
 ---
 
@@ -170,7 +177,50 @@ Render will detect the push and redeploy automatically! 🚀
 
 ## Common Issues & Solutions
 
-### Issue 1: Build Fails
+### Issue 1: Build Fails - "No module named 'app'" or "No module named 'dist'"
+
+**This is the most common error!**
+
+**Cause**: You pushed the parent directory instead of the `dist` folder contents.
+
+**Solution A - Recommended (Push only dist folder):**
+```bash
+# Start fresh - go into dist folder
+cd dist
+
+# Remove old git if exists
+rm -rf .git
+
+# Initialize git here
+git init
+
+# Add and commit
+git add .
+git commit -m "Django todo app"
+
+# Add remote and push
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -f origin main
+```
+
+**Solution B - Keep current structure:**
+
+The `render.yaml` has been updated with `rootDir: dist`. Push this change:
+```bash
+cd dist
+git add render.yaml
+git commit -m "Fix root directory"
+git push origin main
+```
+
+Then in Render Dashboard:
+- Go to Settings → Root Directory → Set to `dist`
+- Click "Save Changes"
+- Click "Manual Deploy"
+
+**Verify**: Your GitHub repo should show `manage.py` at the root level (not inside a `dist` folder).
+
+### Issue 2: Build Fails - Permission Denied
 
 **Error**: `Permission denied: ./build.sh`
 

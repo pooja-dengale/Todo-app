@@ -68,13 +68,17 @@ python manage.py runserver
 
 ### Deploy to Render (Production)
 
+**🚨 IMPORTANT**: You got an error? See [QUICK_FIX.md](QUICK_FIX.md) for the solution!
+
 **Simple 3-Step Process:**
 
-1. **Push to GitHub** - Upload your code
+1. **Push to GitHub** - Upload your code (from inside the `dist` folder!)
 2. **Connect to Render** - Link your repository  
 3. **Deploy** - Render does everything automatically!
 
 📖 **Step-by-step guide**: [RENDER_QUICK_START.md](RENDER_QUICK_START.md) ← Start here!
+
+🔧 **Got "No module named 'app'" error?**: [QUICK_FIX.md](QUICK_FIX.md) ← Fix it here!
 
 📚 **Detailed documentation**: [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
 

@@ -2,6 +2,7 @@ services:
   - type: web
     name: django-todo-app
     runtime: python
+    rootDir: dist
     buildCommand: "./build.sh"
     startCommand: "gunicorn dist.wsgi:application"
     envVars:
