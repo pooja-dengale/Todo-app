@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: django-todo-app
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn dist.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+      - key: WEB_CONCURRENCY
+        value: 4
+    autoDeploy: true
+
+databases:
+  - name: django-todo-db
+    databaseName: todo_db
+    user: todo_user

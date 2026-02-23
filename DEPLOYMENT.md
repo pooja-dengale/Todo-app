@@ -135,18 +135,27 @@ railway run python manage.py createsuperuser
 
 1. **Create account at** https://render.com
 
-2. **Create new Web Service:**
-- Connect your GitHub repository
-- Build Command: `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate`
-- Start Command: `gunicorn dist.wsgi`
+2. **Push code to GitHub**
 
-3. **Add environment variables in Render dashboard:**
-- SECRET_KEY
-- DEBUG=False
-- ALLOWED_HOSTS=your-app.onrender.com
-- PYTHON_VERSION=3.11.0
+3. **Create new Web Service:**
+   - Connect your GitHub repository
+   - Build Command: `./build.sh`
+   - Start Command: `gunicorn dist.wsgi:application`
 
-4. **Deploy automatically on git push**
+4. **Add environment variables in Render dashboard:**
+   - SECRET_KEY (use Generate button)
+   - DEBUG=False
+   - DATABASE_URL (from PostgreSQL service)
+   - RENDER_EXTERNAL_HOSTNAME=your-app.onrender.com
+   - PYTHON_VERSION=3.11.0
+
+5. **Create PostgreSQL Database:**
+   - Click "New +" → "PostgreSQL"
+   - Connect to your web service
+
+6. **Deploy automatically on git push**
+
+For detailed Render deployment instructions, see [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
 
 ---
 

@@ -12,8 +12,14 @@ A full-featured ToDo application built with Django 5, featuring user authenticat
 - ✅ Create, Read, Update, Delete Tasks
 - ✅ User-specific task management
 - ✅ Task completion status tracking
+- ✅ Task priority levels (Low, Medium, High)
+- ✅ Due date tracking
+- ✅ Search functionality (title and description)
+- ✅ Filter by status (All, Pending, Completed)
+- ✅ Pagination (10 tasks per page)
 - ✅ Modern, responsive UI with purple gradient theme
 - ✅ Secure delete confirmation
+- ✅ Comprehensive test suite
 - ✅ Production-ready configuration
 
 ## Screenshots
@@ -35,76 +41,42 @@ Create and edit tasks with a simple, intuitive form.
 - **Deployment:** Gunicorn, WhiteNoise
 - **Security:** CSRF protection, user authentication, secure sessions
 
-## Installation
+## Quick Start
 
-### Prerequisites
-- Python 3.11 or higher
-- pip (Python package manager)
-- Git
+### Local Development
 
-### Local Setup
-
-1. **Clone the repository:**
+1. Clone and setup:
 ```bash
-git clone https://github.com/yourusername/django-todo-app.git
-cd django-todo-app/dist
-```
-
-2. **Create virtual environment:**
-```bash
+cd dist
 python -m venv venv
-```
-
-3. **Activate virtual environment:**
-- Windows:
-  ```bash
-  venv\Scripts\activate
-  ```
-- Mac/Linux:
-  ```bash
-  source venv/bin/activate
-  ```
-
-4. **Install dependencies:**
-```bash
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-5. **Create .env file:**
+2. Configure environment:
 ```bash
 cp .env.example .env
+# Edit .env and add your SECRET_KEY
 ```
 
-6. **Generate SECRET_KEY:**
-```bash
-python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-```
-Copy the output and add it to your `.env` file:
-```
-SECRET_KEY=your-generated-secret-key
-DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-```
-
-7. **Run migrations:**
+3. Run migrations and start:
 ```bash
 python manage.py migrate
-```
-
-8. **Create superuser (admin):**
-```bash
 python manage.py createsuperuser
-```
-
-9. **Run development server:**
-```bash
 python manage.py runserver
 ```
 
-10. **Open in browser:**
-```
-http://127.0.0.1:8000/
-```
+### Deploy to Render (Production)
+
+**Simple 3-Step Process:**
+
+1. **Push to GitHub** - Upload your code
+2. **Connect to Render** - Link your repository  
+3. **Deploy** - Render does everything automatically!
+
+📖 **Step-by-step guide**: [RENDER_QUICK_START.md](RENDER_QUICK_START.md) ← Start here!
+
+📚 **Detailed documentation**: [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
 
 ## Usage
 
@@ -115,10 +87,13 @@ http://127.0.0.1:8000/
 4. You'll be automatically logged in
 
 ### Managing Tasks
-1. **Create Task:** Click "+ Add Task" button
+1. **Create Task:** Click "+ Add Task" button, set title, description, priority, and optional due date
 2. **Edit Task:** Click "Edit" button on any task
 3. **Delete Task:** Click "Delete" button and confirm
 4. **Mark Complete:** Edit task and check "Completed" checkbox
+5. **Search Tasks:** Use the search bar to find tasks by title or description
+6. **Filter Tasks:** Use the status dropdown to filter by Pending or Completed tasks
+7. **Navigate Pages:** Use pagination controls when you have more than 10 tasks
 
 ### Admin Panel
 Access the admin panel at `/admin/` with your superuser credentials to manage users and tasks.
@@ -150,9 +125,23 @@ dist/
 
 ## Deployment
 
+This application is production-ready and can be deployed to various platforms.
+
+### Quick Deploy to Render (Recommended)
+
+1. Push your code to GitHub
+2. Go to [Render Dashboard](https://dashboard.render.com)
+3. Click "New +" → "Blueprint"
+4. Connect your repository
+5. Render will auto-detect `render.yaml` and deploy everything
+
+See [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md) for detailed instructions.
+
+### Other Platforms
+
 See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions for:
 - Heroku
-- Railway
+- Railway  
 - Render
 - PythonAnywhere
 
@@ -186,16 +175,30 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions for:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## Testing
+
+Run the test suite:
+```bash
+python manage.py test
+```
+
+Run tests with coverage:
+```bash
+pip install coverage
+coverage run --source='.' manage.py test
+coverage report
+```
+
 ## Future Enhancements
 
 - [ ] Task categories/tags
-- [ ] Due dates and reminders
-- [ ] Task priority levels
-- [ ] Search and filter functionality
+- [ ] Email reminders for due dates
 - [ ] Task sharing between users
 - [ ] REST API for mobile apps
 - [ ] Dark mode toggle
 - [ ] Email notifications
+- [ ] Task attachments
+- [ ] Recurring tasks
 
 ## License
 

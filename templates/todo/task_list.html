@@ -6,16 +6,35 @@
       <h2>Your Tasks</h2>
       <a class="btn primary" href="{% url 'task_create' %}">+ Add Task</a>
     </div>
+    
+    <!-- Search and Filter -->
+    <form method="get" class="search-filter">
+      <input type="text" name="search" placeholder="Search tasks..." value="{{ search_query }}">
+      <select name="status">
+        <option value="">All Tasks</option>
+        <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+      </select>
+      <button type="submit" class="btn">Filter</button>
+      {% if search_query or status_filter %}
+        <a href="{% url 'task_list' %}" class="btn">Clear</a>
+      {% endif %}
+    </form>
+    
     <ul class="task-list">
-      {% for task in tasks %}
+      {% for task in page_obj %}
         <li class="task-item">
           <div class="task-main">
             <h3>{{ task.title }}</h3>
             {% if task.description %}
               <p>{{ task.description }}</p>
             {% endif %}
+            {% if task.due_date %}
+              <small class="due-date">Due: {{ task.due_date|date:"M d, Y" }}</small>
+            {% endif %}
           </div>
           <div class="task-meta">
+            <span class="badge priority-{{ task.priority }}">{{ task.get_priority_display }}</span>
             <span class="badge {% if task.completed %}done{% else %}open{% endif %}">
               {{ task.completed|yesno:"Done,Open" }}
             </span>
@@ -24,8 +43,31 @@
           </div>
         </li>
       {% empty %}
-        <li class="task-empty">No tasks yet. Click “Add Task”.</li>
+        <li class="task-empty">
+          {% if search_query or status_filter %}
+            No tasks found matching your criteria.
+          {% else %}
+            No tasks yet. Click "Add Task".
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
+    
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="btn">First</a>
+          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="btn">Previous</a>
+        {% endif %}
+        
+        <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="btn">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="btn">Last</a>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

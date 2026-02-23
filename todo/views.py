@@ -2,11 +2,43 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.http import JsonResponse
+
+def health_check(request):
+    """Health check endpoint for monitoring"""
+    return JsonResponse({'status': 'healthy', 'service': 'django-todo-app'})
 
 @login_required
 def task_list(request):
-    tasks = Task.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'todo/task_list.html', {'tasks': tasks})
+    search_query = request.GET.get('search', '')
+    status_filter = request.GET.get('status', '')
+    
+    tasks = Task.objects.filter(user=request.user)
+    
+    if search_query:
+        tasks = tasks.filter(
+            Q(title__icontains=search_query) | 
+            Q(description__icontains=search_query)
+        )
+    
+    if status_filter == 'completed':
+        tasks = tasks.filter(completed=True)
+    elif status_filter == 'pending':
+        tasks = tasks.filter(completed=False)
+    
+    tasks = tasks.order_by('-created_at')
+    
+    paginator = Paginator(tasks, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'todo/task_list.html', {
+        'page_obj': page_obj,
+        'search_query': search_query,
+        'status_filter': status_filter
+    })
 
 @login_required
 def task_create(request):

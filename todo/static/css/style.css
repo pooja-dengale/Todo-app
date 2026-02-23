@@ -202,3 +202,64 @@ form input:focus, form textarea:focus, form select:focus {
 /* Error messages */
 .error-messages { margin-bottom: 15px; }
 .error-messages .message { margin-bottom: 8px; }
+
+/* Search and Filter */
+.search-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.search-filter input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+.search-filter input[type="text"]:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+.search-filter select {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  background: white;
+  cursor: pointer;
+}
+.search-filter select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* Priority badges */
+.badge.priority-low { background: #10b981; color: #fff; }
+.badge.priority-medium { background: #f59e0b; color: #fff; }
+.badge.priority-high { background: #ef4444; color: #fff; }
+
+/* Due date */
+.due-date {
+  display: block;
+  color: #666;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+.pagination .page-info {
+  color: #555;
+  font-size: 14px;
+  margin: 0 8px;
+}

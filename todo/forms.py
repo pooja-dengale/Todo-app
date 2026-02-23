@@ -4,9 +4,19 @@ from django.contrib.auth.models import User
 from .models import Task
 
 class TaskForm(forms.ModelForm):
+    due_date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        help_text='Optional due date'
+    )
+
     class Meta:
         model = Task
-        fields = ['title', 'description', 'completed']
+        fields = ['title', 'description', 'priority', 'due_date', 'completed']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 4}),
+        }
+
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
