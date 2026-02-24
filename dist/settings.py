@@ -64,6 +64,12 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
 
+# Add Render.com domains
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend([
+        'https://*.onrender.com',
+    ])
+
 ROOT_URLCONF = 'dist.urls'
 
 TEMPLATES = [
