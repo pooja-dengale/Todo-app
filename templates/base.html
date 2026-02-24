@@ -11,7 +11,10 @@
   {% if request.user.is_authenticated %}
   <header class="navbar">
     <div class="container nav-row">
-      <a class="brand" href="{% url 'task_list' %}">ToDo</a>
+      <a class="logo" href="{% url 'task_list' %}">
+        <div class="logo-icon">✓</div>
+        <span class="logo-text">ToDo</span>
+      </a>
       <nav class="nav-links">
         <a href="{% url 'task_create' %}">Add Task</a>
         <form method="post" action="{% url 'logout' %}">
