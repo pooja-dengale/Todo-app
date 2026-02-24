@@ -60,15 +60,23 @@ MIDDLEWARE = [
 ]
 
 # CSRF Trusted Origins for production
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+CSRF_TRUSTED_ORIGINS = []
+
+# Add specific Render domain if set
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
 
-# Add Render.com domains
+# Add common Render patterns for production
 if not DEBUG:
+    # Add your specific app domain
     CSRF_TRUSTED_ORIGINS.extend([
-        'https://*.onrender.com',
+        'https://todo-app-0jw0.onrender.com',
     ])
+
+# Allow custom domains from environment
+custom_origins = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+if custom_origins:
+    CSRF_TRUSTED_ORIGINS.extend(custom_origins)
 
 ROOT_URLCONF = 'dist.urls'
 
