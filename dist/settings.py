@@ -76,6 +76,10 @@ if not DEBUG:
     CSRF_COOKIE_HTTPONLY = False
     CSRF_USE_SESSIONS = False
     CSRF_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_DOMAIN = None
+else:
+    # More permissive CSRF for development
+    CSRF_COOKIE_HTTPONLY = False
 
 # Allow custom domains from environment
 custom_origins = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
@@ -207,6 +211,10 @@ LOGGING = {
 
 # Security settings for production
 if not DEBUG:
+    # Trust proxy headers from Render (MUST be first)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    # SSL and security settings
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -216,7 +224,4 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     X_FRAME_OPTIONS = 'DENY'
-    
-    # Trust proxy headers from Render
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
