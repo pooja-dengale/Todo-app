@@ -72,6 +72,10 @@ if not DEBUG:
     CSRF_TRUSTED_ORIGINS.extend([
         'https://todo-app-0jw0.onrender.com',
     ])
+    # Additional CSRF settings for production
+    CSRF_COOKIE_HTTPONLY = False
+    CSRF_USE_SESSIONS = False
+    CSRF_COOKIE_SAMESITE = 'Lax'
 
 # Allow custom domains from environment
 custom_origins = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())

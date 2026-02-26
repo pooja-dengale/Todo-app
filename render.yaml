@@ -3,7 +3,7 @@ services:
     name: django-todo-app
     runtime: python
     rootDir: dist
-    buildCommand: "./build.sh"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
     startCommand: "gunicorn dist.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
@@ -14,6 +14,8 @@ services:
         value: False
       - key: WEB_CONCURRENCY
         value: 4
+      - key: RENDER_EXTERNAL_HOSTNAME
+        sync: false
     autoDeploy: true
 
 databases:
